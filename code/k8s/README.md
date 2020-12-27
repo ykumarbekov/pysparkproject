@@ -11,12 +11,20 @@ helm search repo spark-operator
 - Install Operator  
 ```
 helm install autodataspark spark-operator/spark-operator --namespace default --set sparkJobNamespace=default --set enableWebhook=true
-View: helm ls --all-namespaces
+# View installed Spark-operator: helm ls -n default
 ```
-- Deploy and View status  
-```
-kubectl apply -f pysparkproject/code/k8s/spark-prime-py.yaml
-View: kubectl describe SparkApplication pyspark-prime -n default
-View pods: kubectl get pods --all-namespaces
-View pod logs: kubectl logs pyspark-prime-driver
-```
+- Deploy and View status Steps:  
+1) By using the spark-on-k8s-operator:  
+   git clone https://github.com/...    
+   kubectl apply -f pysparkproject/code/k8s/spark-prime-py.yaml  
+   View: kubectl describe SparkApplication pyspark-prime -n default  
+   View pods: kubectl get pods  
+   View pod logs: kubectl logs pyspark-prime-driver  
+   Delete: kubectl delete SparkApplication pyspark-prime  
+2) Alternate way to submit application on K8S Cluster:  
+   https://spark.apache.org/docs/3.0.0-preview/running-on-kubernetes.html  
+   https://stackoverflow.com/questions/63629870/apache-spark-spark-submit-k8s-api-https-error  
+********
+Useful links:  
+Operator github: https://github.com/GoogleCloudPlatform/spark-on-k8s-operator  
+Kubectl cheatsheet: https://kubernetes.io/docs/reference/kubectl/cheatsheet/  

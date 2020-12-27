@@ -18,6 +18,9 @@ def isPrime(x: int) -> bool:
 
 if __name__ == "__main__":
     conf = SparkConf().setAppName("PrimeNumberApp")
+    # .set("spark.kubernetes.executor.volumes.hostPath.exepv.mount.path", "/opt/spark_data")\
+    # .set("spark.kubernetes.executor.volumes.hostPath.exepv.options.path", "/mnt/nfs/var/nfs/spark-storage")
+
     spark = SparkSession.builder.config(conf=conf).getOrCreate()
     # for i in range(1, 11):
     #     if isPrime(i): print(i)

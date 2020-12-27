@@ -1,7 +1,7 @@
 apiVersion: "sparkoperator.k8s.io/v1beta2"
 kind: SparkApplication
 metadata:
-  name: pyspark-prime-example
+  name: pyspark-prime-ftp
   namespace: default
 spec:
   type: Python
@@ -9,7 +9,7 @@ spec:
   mode: cluster
   image: "gcr.io/spark-operator/spark-py:v3.0.0"
   imagePullPolicy: Always
-  mainApplicationFile: ftp://var/ftp/pub/prime.py
+  mainApplicationFile: ftp://kube-master.reksoft.ru/pub/prime.py
   sparkVersion: "3.0.0"
   restartPolicy:
     type: OnFailure
@@ -17,17 +17,10 @@ spec:
     onFailureRetryInterval: 10
     onSubmissionFailureRetries: 3
     onSubmissionFailureRetryInterval: 20
-  volumes:
-    - name: spark-data
-      persistentVolumeClaim:
-        claimName: spark-storage-pvc
   driver:
     cores: 1
     coreLimit: "1200m"
     memory: "1024m"
-    volumeMounts:
-      - name: spark-data
-        mountPath: /opt/spark_data
     labels:
       version: 3.0.0
     serviceAccount: autodataspark-spark
@@ -35,8 +28,5 @@ spec:
     cores: 1
     instances: 1
     memory: "1024m"
-    volumeMounts:
-      - name: spark-data
-        mountPath: /opt/spark_data
     labels:
       version: 3.0.0

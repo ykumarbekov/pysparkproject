@@ -1,0 +1,19 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: test-volume-pod
+spec:
+  volumes:
+    - name: spark-data
+      persistentVolumeClaim:
+        claimName: spark-storage-pvc
+
+  containers:
+    - name: test-pv-container
+      volumeMounts:
+        - name: spark-data
+          mountPath: /opt/spark_data
+
+      image: debian
+      command: ["/bin/sh"]
+      args: ["-c", "sleep 10 && echo Sleep expired > /opt/spark_data/file1.txt"]
