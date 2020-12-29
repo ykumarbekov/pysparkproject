@@ -8,10 +8,11 @@ def normalizeWords(text):
 
 
 if __name__ == "__main__":
-    conf = SparkConf().setAppName("WordCount").setMaster("local")
+    conf = SparkConf().setAppName("WordCount-App")
     spark = SparkSession.builder.config(conf=conf).getOrCreate()
 
-    inp = spark.sparkContext.textFile("/Users/ykumarbekov/projects/samples/Book")
+    # inp = spark.sparkContext.textFile("/Users/ykumarbekov/projects/samples/udemy-spark-python/Book")
+    inp = spark.sparkContext.textFile("hdfs://ns1/tmp/data/sources/book")
     # result = inp.flatMap(lambda x: x.split()).countByValue()
     # result = inp.flatMap(normalizeWords).countByValue()
     rdd = inp.flatMap(normalizeWords).map(lambda x: (x, 1)).reduceByKey(lambda x, y: x+y)
@@ -19,7 +20,7 @@ if __name__ == "__main__":
 
     count = 0
     for i in result:
-        if count < 10 and i[0].encode('ascii', 'ignore'):
+        if count < 20 and i[0].encode('ascii', 'ignore'):
             print(f"{i[0]} -> {i[1]}")
         count = count + 1
 

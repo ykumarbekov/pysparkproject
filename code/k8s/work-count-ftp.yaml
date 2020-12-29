@@ -1,0 +1,36 @@
+apiVersion: "sparkoperator.k8s.io/v1beta2"
+kind: SparkApplication
+metadata:
+  name: pyspark-work-count-ftp
+  namespace: default
+spec:
+  type: Python
+  pythonVersion: "3"
+  mode: cluster
+  image: "gcr.io/spark-operator/spark-py:v3.0.0"
+  imagePullPolicy: Always
+  mainApplicationFile: ftp://kube-master.reksoft.ru/pub/work-count.py
+  sparkVersion: "3.0.0"
+  restartPolicy:
+    type: OnFailure
+    onFailureRetries: 2
+    onFailureRetryInterval: 10
+    onSubmissionFailureRetries: 3
+    onSubmissionFailureRetryInterval: 20
+  volumes:
+    - name: config-vol-hadoop
+      configMap:
+        name: spark-hadoop-configmap
+  driver:
+    cores: 1
+    coreLimit: "1200m"
+    memory: "1024m"
+    labels:
+      version: 3.0.0
+    serviceAccount: autodataspark-spark
+  executor:
+    cores: 1
+    instances: 1
+    memory: "1024m"
+    labels:
+      version: 3.0.0

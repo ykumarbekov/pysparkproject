@@ -1,0 +1,17 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  name: pod-using-configmap
+
+spec:
+  volumes:
+    - name: hadoop-configmap-volume
+      configMap:
+        name: spark-hadoop-configmap
+
+  containers:
+    - name: container-configmap
+      image: nginx:1.7.9
+      volumeMounts:
+        - name: hadoop-configmap-volume
+            mountPath: /etc/config
