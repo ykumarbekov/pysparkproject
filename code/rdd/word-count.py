@@ -9,6 +9,7 @@ def normalizeWords(text):
 
 if __name__ == "__main__":
     conf = SparkConf().setAppName("WordCount-App")
+
     spark = SparkSession.builder.config(conf=conf).getOrCreate()
 
     # inp = spark.sparkContext.textFile("/Users/ykumarbekov/projects/samples/udemy-spark-python/Book")

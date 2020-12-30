@@ -30,7 +30,8 @@ helm install autodataspark spark-operator/spark-operator --namespace default --s
 ```
 scp root@hadoop-nn1.reksoft.ru://etc/hadoop/conf/core-site.xml /root/folder/
 kubectl create configmap spark-hadoop-configmap --from-file=/root/folder/core-site.xml
-```       
+```
+1.2) Configuring Hadoop Conf. parameters inside yaml file         
 2) Alternate way to submit application on K8S Cluster:  
    https://spark.apache.org/docs/3.0.0-preview/running-on-kubernetes.html  
    https://stackoverflow.com/questions/63629870/apache-spark-spark-submit-k8s-api-https-error  

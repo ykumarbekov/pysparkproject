@@ -14,4 +14,7 @@ spec:
       image: nginx:1.7.9
       volumeMounts:
         - name: hadoop-configmap-volume
-            mountPath: /etc/config
+          mountPath: /etc/hadoop/conf
+      env:
+        - name: HADOOP_CONF_DIR
+          value: /etc/hadoop/conf
